@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Expected Value of a Continuous Uniform Distribution</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="container">
+          <div class="site">
+            <div class="header">
+              <h1 class="title"><a href="/">Warren Wilkinson</a></h1>
+              <a class="extra" href="/">home</a>
+            </div>
+
+                <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Inputting Greek Characters</a></li>
+<li><a href="#sec-2">2 Inputting Formulas</a></li>
+<li><a href="#sec-3">3 Density Function and Probability</a></li>
+<li><a href="#sec-4">4 Expected Value</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Inputting Greek Characters</h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+I've been told that the variance of a continuous uniform distribution is something.
+Now I want to prove it; and learn more about emacs.
+</p>
+<p>
+So first&hellip; variance..
+</p>
+
+
+
+<pre class="src src-emacs">M-x set-input-method RET TeX
+</pre>
+
+
+<p>
+Now I can write \sigma^2 to produce σ². Which is the variance, go me.
+</p>
+<p>
+However, I notice when I export, ''\sigma^2' gets converted to σ². I don't
+want that, because I'm writing the greek symbols directly as UTF8 in my file, 
+so I turn that off with
+</p>
+<pre class="example">
+#+OPTIONS: ^:nil, TeX:nil
+</pre>
+
+
+<p>
+Now, I'm pretty happy, but it's a bit annoying that my input mode bothers
+me each time I type a \, -, ^, or _.   Luckily I can press C-\ to turn
+it off and on.  I'm happy.
+</p>
+<p>
+(Later, I found that if I'd let Org mode do the conversion, I could inline 
+x_{max} and have it expanded. There are no greek letters for tiny m-a-x, so my
+method is inferior).
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Inputting Formulas</h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+Can I write the formula? MathML or something?  I can use:
+</p>
+
+
+
+<pre class="example">\begin{equation}
+x=\sqrt{b}
+\end{equation}
+</pre>
+
+
+<p>
+And I get:
+</p>
+
+
+\begin{equation}
+x=\sqrt{b}
+\end{equation}
+
+<p>
+Again, happy.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Density Function and Probability</h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+Okay, here is what my book tells me:
+</p>
+<p>
+In a uniform distribution, x has a density function
+</p>
+
+
+\begin{equation}
+f(x) = \frac{1}{x_{max} - x_{min}}
+\end{equation}
+
+<p>
+So what's x? I guess the domain. Fine. So lets pretend
+we've got a machine that randomly picks points on the line
+between (3,0) and (5,0).  X would be between 3 and 5.
+</p>
+<p>
+So the probability of the point being between points a and b is:
+</p>
+
+
+\begin{equation}
+P_{ab} = \frac{(b -a)}{(x_{max} - x_{min})}
+\end{equation}
+<p>
+of an region along that line.
+</p>
+<p>
+It's pretty easy to compute: Basically take the sum of 
+the probabilities of all the points between A and B. In
+a continuous situation, that's an integral.
+</p>
+
+
+\begin{equation}
+P_{ab} = \int_a^b f(x) \mathrm{d} x = \int_a^b \frac{1}{x_{max} - x_{min}} \mathrm{d}x
+\end{equation}
+
+<p>
+Notice that f(x) is actually a constant that doesn't depend on x at all&hellip;
+</p>
+
+
+\begin{equation}
+P_{ab} = \frac{1}{x_{max} - x_{min}} \int_a^b 1 \mathrm{d}x
+\end{equation}
+
+\begin{equation}
+P_{ab} = \frac{1}{x_{max} - x_{min}}\Bigg [_a^b x
+\end{equation}
+
+
+\begin{equation}
+P_{ab} = \frac{b -a}{x_{max} - x_{min}}
+\end{equation}
+
+<p>
+Wow, I made several mistakes writing out the LaTeX for that.  I know org mode can preview those equations (as images) as I write them.
+I'll learn how to turn that on, next time, so I can minimize the number of typing-&gt;output trips I need to make.
+</p>
+<p>
+Okay, that's the easy stuff.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Expected Value</h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+So, the expected value E(x) = μ is the mean (the symbols represent the
+same thing).  In other words &ndash; if we randomly picked a hundred
+thousand billion numbers, and averaged them all together, what would
+we expect the result to be.
+</p>
+<p>
+Since I'm a big fan of actually trying things, lets do that.
+</p>
+
+
+
+<pre class="src src-elisp"><span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">Put cursor on closing paren and</span>
+<span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">press C-x C-e to evaluate</span>
+
+(<span style="color: #00bfff;">defvar</span> <span style="color: #4eee94;">*x-min*</span> 3.0)
+(<span style="color: #00bfff;">defvar</span> <span style="color: #4eee94;">*x-max*</span> 5.0)
+
+<span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">Emacs doesn't have random floating</span>
+<span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">point numbers. So approximate it </span>
+<span style="color: #7f7f7f;">;;</span><span style="color: #7f7f7f;">...</span>
+
+<span style="color: #7f7f7f;">;</span><span style="color: #7f7f7f;">(defun pick-number ()</span>
+<span style="color: #7f7f7f;">;  </span><span style="color: #7f7f7f;">(+ (random (- *x-max* *x-min*)) *x-min*))</span>
+
+(<span style="color: #00bfff;">defun</span> <span style="color: #daa520;">pick-number</span> ()
+  (+ (/ (random (* (floor (- *x-max* *x-min*)) 1000000)) 1000000.0) *x-min*))
+
+<span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">Use C-u C-x C-e to evaluate and print results</span>
+
+(pick-number)3.053389
+(pick-number)4.5719829999999995
+(pick-number)3.5274710000000002
+
+(<span style="color: #00bfff;">defun</span> <span style="color: #daa520;">take-average</span> (n)
+  (<span style="color: #00bfff;">let</span> ((accumulator 0))
+    (<span style="color: #00bfff;">dotimes</span> (x n (/ accumulator n))
+      (incf accumulator (pick-number)))))
+
+(take-average 100)3.9764163599999995
+(take-average 1000)3.9871245689999983)
+(take-average 10000)4.003674864100012
+
+</pre>
+
+
+<p>
+Wild guess: E(x) = 4.    
+</p>
+<p>
+Anyway, a better way would be to actually take a weighted average of all
+the probabilities. 
+</p>
+
+
+\begin{equation}
+E(x) = \int_3^5 xf(x) \mathrm{d}x = \ldots
+\end{equation}
+
+<p>
+And once again f(x) is actually a constant that doesn't depend on x at all
+(<b>but that won't be true of other distributions!!!</b>), so we'll just call it
+C.
+</p>
+
+
+\begin{equation}
+C = \frac{1}{5-3} = \frac{1}{2}
+\end{equation}
+
+\begin{equation}
+E(x) = C \int_3^5 x \mathrm{d}x
+\end{equation}
+
+\begin{equation}
+E(x) = C \Bigg[_3^5 \frac{x^2}{2}
+\end{equation}
+
+\begin{equation}
+E(x) = C \frac{5^2 - 3^2}{2}
+\end{equation}
+
+\begin{equation}
+E(x) = C \frac{16}{2}
+\end{equation}
+
+\begin{equation}
+E(x) = \frac{1}{2}\frac{16}{2} 
+\end{equation}
+
+\begin{equation}
+E(x) = 4
+\end{equation}
+
+<p>
+And the magic formula for E(x) for a uniform distribution was:
+\begin{equation}
+E(x) = f(x)\frac{b^2 - a^2}{2}
+\end{equation}
+
+However the book says that can be reduced, but here is
+my current state:
+</p>
+
+
+\begin{equation}
+E(x) = \frac{1}{b - a}\frac{b^2 - a^2}{2} = \frac{1}{2}\frac{b^2 - a^2}{b - a}
+\end{equation}
+
+<p>
+So, that second fraction. I don't want to do it. Can emacs do it?
+</p>
+<p>
+Lets try&hellip; typing
+</p>
+<p>
+'(b^2 - a^2)/(b-a)
+</p>
+<p>
+and then simplify it with emacs&hellip;
+</p>
+<p>
+I found d B to display it big. That's kind of nice.
+Actually:
+</p>
+<ul>
+<li>d N : Normal Display
+</li>
+<li>d B : Big display
+</li>
+<li>d C : C program display
+</li>
+<li>d T : TeX program display
+</li>
+<li>d L : Latex program display.
+</li>
+</ul>
+
+
+<p>
+So my calculator can actually give me the latex commands I can embed in
+this document. That's pretty sweet.  Lets try some algebraic commands:
+</p>
+<ol>
+<li>a s : nope (algebraic simplify)
+</li>
+<li>a = : nope (algebraic solve)
+</li>
+<li>a " : nope (algebraic calc-formula-expand)
+</li>
+</ol>
+
+
+<p>
+Okay, <a href="https://www.gnu.org/software/emacs/manual/html_mono/calc.html#Simplifying-Formulas">the manual on calc simplification</a> says
+</p>
+<blockquote>
+
+<p>None of Calc's simplification commands are designed to pull rabbits
+out of hats; they simply apply certain specific rules to put formulas
+into less redundant or more pleasing forms. Serious algebra in Calc
+must be done manually, usually with a combination of selections and
+rewrite rules. See Rearranging with Selections. See Rewrite Rules.
+</p>
+</blockquote>
+
+
+<p>
+So the rearrange is 
+</p>
+<ul>
+<li>j R : move term right
+</li>
+<li>j L : move term left
+</li>
+<li>j D : distribute law
+</li>
+</ul>
+
+
+
+<p>
+And apparently j D is implemented using rewrite rules. Press s e to see those
+(and type 'DistribRules'. Press C-c C-c when done, ideally without making changes.
+</p>
+<ul>
+<li>j M : undo the distribute (merge)
+</li>
+<li>j C : commute (swap a + b + c  ===&gt;  b + a + c)
+</li>
+<li>j N : negate
+</li>
+<li>j &amp; : invert
+</li>
+<li>j E : move term to other side of equals
+</li>
+<li>j I : isolate a variable (uses a S to solve for a variable)
+</li>
+<li>j * : multiply both sides by a number
+</li>
+<li>j + : add to both sides of an equation
+</li>
+<li>j - : subtract from both sides of an equation
+</li>
+</ul>
+
+
+<p>
+So lets see if we can derive it ourselves using calc and some hints:
+<a href="http://www.sosmath.com/tables/algiden/algiden.html">http://www.sosmath.com/tables/algiden/algiden.html</a>
+</p>
+<p>
+Factoring formulas.
+</p>
+<p>
+Apparently x^2 - y^2 = (x + y)(x - y)
+</p>
+<p>
+I wonder if I can put a rewrite rule for this into emacs?
+</p>
+<p>
+Actually, putting 
+</p>
+<p>
+' x^2 - y^2 into calc
+and typing a f factors it.
+</p>
+<p>
+I wonder if it can do the cubed ones? Nope.
+</p>
+<p>
+Hey, cool:
+</p>
+
+
+
+<pre class="example">' (x^2 - y^2) / (x - y)
+a f
+</pre>
+
+
+<p>
+gives the result: a + b
+</p>
+<p>
+So emacs <b>can</b> do it. And, very likely, as I start to get into more
+complex powers, I can probably implement the general factor rule
+myself as a rewrite rule. I hate doing math, so this is good.
+</p>
+<p>
+To sum:
+</p>
+
+
+
+<pre class="example">M-x calc
+d B
+m f     (fraction mode, don't turn 1/2 into .5)
+' (1/2)(b^2 - a^2)/(b - a)
+a f
+d L
+</pre>
+
+
+
+
+\begin{equation}
+E(x) = \frac{1}{2}\frac{b^2 - a^2}{b - a} = \frac{b + a}{2}
+\end{equation}
+
+<p>
+(furthermore, I think I can wrap the above in an emacs 'calc' language block&hellip;)
+</p>
+<p>
+Emacs rocks.
+</p></div>
+</div>
+
+
+            <div class="footer">
+              <div class="contact">
+                <p>
+                  Your Name<br />
+                  What You Are<br />
+                  your@email.com
+                </p>
+              </div>
+              <div class="contact">
+                <p>
+                  <a href="http://github.com/yourusername/">github.com/yourusername</a><br />
+                  <a href="http://twitter.com/yourusername/">twitter.com/yourusername</a><br />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /container -->
+
+        <script type="text/javascript"
+                src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>        
+    </body>
+</html>
