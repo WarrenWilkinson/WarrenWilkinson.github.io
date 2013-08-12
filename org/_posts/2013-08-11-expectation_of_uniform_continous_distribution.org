@@ -7,7 +7,7 @@
 ---
 layout: post
 title: Expected Value of a Continuous Uniform Distribution
-excerpt: And also, first post.
+excerpt: Using emacs, calc and org-mode to investigate some simple mathematics
 categories:
     - emacs
     - statistics
