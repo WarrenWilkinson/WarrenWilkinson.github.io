@@ -1,4 +1,4 @@
 name: Warren Wilkinson
 markdown: redcarpet
 pygments: true
-source: jekyll
+exclude: ["org"]
