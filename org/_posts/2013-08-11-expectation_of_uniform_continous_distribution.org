@@ -5,7 +5,7 @@
 #+AUTHOR: Warren Wilkinson
 #+BEGIN_HTML
 ---
-layout: default
+layout: post
 title: Expected Value of a Continuous Uniform Distribution
 excerpt: And also, first post.
 categories:
@@ -13,7 +13,6 @@ categories:
     - statistics
 ---
 #+END_HTML
-
 
 * Inputting Greek Characters
 

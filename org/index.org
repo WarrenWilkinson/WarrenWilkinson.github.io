@@ -1,7 +1,7 @@
 #+STARTUP: showall indent
 #+STARTUP: hidestars
 #+TITLE: Index
-#+OPTIONS: ^:nil, TeX:nil
+#+OPTIONS: toc:nil
 #+AUTHOR: Warren Wilkinson
 #+BEGIN_HTML
 ---
