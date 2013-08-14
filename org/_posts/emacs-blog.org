@@ -1,0 +1,50 @@
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+TITLE: Howto blog with emacs
+#+AUTHOR: Warren Wilkinson
+#+BEGIN_HTML
+---
+layout: post
+title: Howto blog with emacs
+excerpt: Collecting notes for now
+categories:
+    - emacs
+---
+#+END_HTML
+
+* Github Hosting, Emacs and Jekyll
+
+Shout-out to git [[http://pages.github.com/][Github pages]] for hosting this. Way sweeter than
+Wordpress, even with an emacs wordpress plugin.
+
+In my [[file:2013-08-11-expectation_of_uniform_continous_distribution.org][last post]] I used emacs calc and org and stuff to derive the
+expected value of a continous uniform distribution.  
+
+Today is much the same, but I have two more tricks I want to try:
+
+Using org modes embedded latex like
+
+#+begin_example
+\epsilon^5
+#+end_example
+
+and having it render as \epsilon^5 (if you'll remember in my [[file:2013-08-11-expectation_of_uniform_continous_distribution.org][last post]]
+I used Emacs input encoding for that).
+
+I also want to try out Calcs embedded mode.  It took a while to
+write all those equations.  What I want is to use calc to print the intermediate steps
+in Latex.
+
+** Jekyll breaks my Emacs Org mode links.
+
+My org mode file links go to files in the same directory (yyyy-mm-dd-file.org),
+but Jekyll turns my page urls into category/category/category/year/month/day/title.org
+
+A simple:
+
+#+begin_example
+permalink: /:year-:month-:day-:title.html
+#+end_example
+
+added to my _config.yml is enough to make the URLs consistent to both
+tools.  Links work in org and in Jekyll, nice!
