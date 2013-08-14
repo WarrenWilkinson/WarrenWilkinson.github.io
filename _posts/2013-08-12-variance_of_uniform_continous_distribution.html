@@ -1,0 +1,292 @@
+---
+layout: post
+title: Variance of a Continuous Uniform Distribution
+excerpt: Using emacs, calc and org-mode to investigate some simple mathematics
+categories:
+    - emacs
+    - statistics
+---
+
+
+<div id="table-of-contents">
+<h3>Table of Contents</h3>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 First, embedded calc mode.</a></li>
+<li><a href="#sec-2">2 Variance</a>
+<ul>
+<li><a href="#sec-2-1">2.1 Variance from difference of Expectations</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Variance of uniform distribution</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-3">
+<h3 id="sec-1">First, embedded calc mode.</h3>
+<div class="outline-text-3" id="text-1">
+
+
+<p>
+So <a href="2013-08-11-expectation_of_uniform_continous_distribution.html">last time</a> I computed the expected value of a continous uniform distribution. And there I said I wanted
+to explore  <a href="http://www.math.utah.edu/docs/info/calc_17.html">embedded calc mode</a> and see if I could get it to print my equations (rather than me typing them).
+</p>
+<p>
+So lets try: First I'm gonna write my equation in the document like
+so:
+</p>
+
+
+
+<pre class="example"># [calc-mode: language: latex]
+\begin{equation}
+f(x) = x^2 + 1
+\end{equation}
+</pre>
+
+
+<p>
+Then I'm gonna put my cursor on the equation text (say the =
+sign) then press M-# e.  I get 'M-# is undefined'. So I whip
+out info (M-x info) lookup Calc, and am told to use C-x * e. 
+</p>
+<p>
+Now I put my cursor on the equals sign and press 'j - 2 RET' and it
+subtracts two from each side giving me:
+</p>
+
+
+
+<pre class="example">\begin{equation}
+f(x) -2 = x^2 - 1
+\end{equation}
+</pre>
+
+
+<p>
+Which is nice, but not what I want. I want to copy the
+equation first. <b>Aha, here it is:</b> C-x * d (duplicate formula under cursor).
+It even copies the surrounding <i>begin{equation}</i> and <i>end{equation}</i>,
+so that's perfect.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-3">
+<h3 id="sec-2">Variance</h3>
+<div class="outline-text-3" id="text-2">
+
+
+<p>
+Okay, so it's &sigma;^2 = (b-a)^2/12. Where does that come from?  
+</p>
+<p>
+<b>Given</b>
+</p>
+
+
+\begin{equation}
+f(x) = \frac{1}{x_{max} - x_{min}}
+\end{equation}
+
+\begin{equation}
+P_{ab} = \frac{(b -a)}{(x_{max} - x_{min})}
+\end{equation}
+
+\begin{equation}
+E(x) = \frac{b + a}{2}
+\end{equation}
+
+<p>
+Also, I've been told:
+</p>
+
+
+\begin{equation}
+\sigma^2 = E(x^2) - E(x)^2
+\end{equation}
+
+<p>
+But I don't know where that comes from.
+</p>
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-4">
+<h4 id="sec-2-1">Variance from difference of Expectations</h4>
+<div class="outline-text-4" id="text-2-1">
+
+
+<p>
+So the variance is the sum of square distances from the mean.
+</p>
+
+
+\begin{equation}
+\sigma^2 = \int_x (x - \mu)^2 P(x)
+\end{equation}
+
+<p>
+a x (expand, cursor on the ^)
+</p>
+
+
+\begin{equation}
+\sigma^2 = \int_x x^2 P(x) - 2 \int_x \mu x P(x) + \int_x \mu^2 P(x)
+\end{equation}
+
+<p>
+That expanded more than I'd expected, as it also carried the integral sign and the P(x) too. Which was gonna
+be my next steps anyway. The last term,
+</p>
+
+
+\begin{equation}
+\int_x \mu^2 P(x)
+\end{equation}
+
+<p>
+Is equal to just &mu;^2, because the area under the Probability density function is equal to 1. 
+</p>
+
+
+\begin{equation}
+\sigma^2 = \int_x x^2 P(x) - 2 \int_x \mu x P(x) + \mu^2
+\end{equation}
+
+<p>
+The second term, 
+</p>
+
+
+\begin{equation}
+\int_x \mu x P(x)
+\end{equation}
+
+<p>
+Is going to be mu times the value of x P(x) &ndash; which is the weighted probability, which is just the expectation &mu; again.
+</p>
+
+
+
+\begin{equation}
+\sigma^2 = \int_x x^2 P(x) - 2 \mu^2 + \mu^2
+\end{equation}
+
+<p>
+And that simplifies too
+</p>
+
+
+\begin{equation}
+\sigma^2 = \int_x x^2 P(x) - \mu^2
+\end{equation}
+
+<p>
+So I guess what we are saying is that 
+</p>
+
+
+\begin{equation}
+E(x^2) = \int_x x^2 P(x) 
+\end{equation}
+
+<p>
+Which is a strange formula for me, because P(x) has stayed P(x) and didn't become P(x^2). I guess that's why, in wikipedia they wrote it
+as 
+</p>
+
+
+\begin{equation}
+P(X = x) 
+\end{equation}
+
+<p>
+Which I'll do as well from now on, to show that this is what we're talking about. Interesting idea anyway. Glad to know it.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-3">
+<h3 id="sec-3">Variance of uniform distribution</h3>
+<div class="outline-text-3" id="text-3">
+
+
+<p>
+Now, using
+</p>
+
+
+\begin{equation}
+\sigma^2 = E(x^2) - E(x)^2
+\end{equation}
+
+\begin{equation}
+\sigma^2 = \int x^2 P(X = x) - \frac{a+b}{2}^2
+\end{equation}
+
+\begin{equation}
+\sigma^{2} = \int x^{2} P\left( X = x \right) - \frac{(a + b)^{2}}{4}
+\end{equation}
+
+\begin{equation}
+\sigma^{2} = \int x^{2} P\left( X = x \right) - \frac{b^{2} + 2 a b + a^{2}}{4}
+\end{equation}
+
+<p>
+Since P(x = X) is 1/(b - a)
+</p>
+
+
+\begin{equation}
+\sigma^2 = \int \frac{x^2}{b-a} - \frac{b^2 + 2 a b + a^2}{4}
+\end{equation}
+
+\begin{equation}
+\sigma^2 = \Bigg [_{a}^{b}\frac{x^3}{3(b - a)} - \frac{b^2 + 2 a b + a^2}{4}
+\end{equation}
+
+\begin{equation}
+\sigma^2 = \frac{b^3 - a^3}{3(b - a)} - \frac{b^2 + 2 a b + a^2}{4}
+\end{equation}
+
+<p>
+j s to select it the first term, a n to normalize ?? 
+</p>
+
+
+\begin{equation}
+\sigma^{2} = \frac{b^{2} + a b + a^{2}}{3} - \frac{b^{2} + 2 a b + a^{2}}{4}
+\end{equation}
+
+<p>
+then a f (calc factor) 
+</p>
+
+
+\begin{equation}
+12 \sigma^2 = (b - a)^2
+\end{equation}
+
+<p>
+Then j / 12 (divide both sides by twelve)
+</p>
+
+
+\begin{equation}
+\sigma^2 = \frac{(b - a)^2}{12}
+\end{equation}
+
+<p>
+And there we have it.  So the math is right, I'm just not entirely sure
+how calc did it.  It's nice that it did though.
+</p>
+
+</div>
+</div>
