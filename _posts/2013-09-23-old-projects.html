@@ -1,0 +1,113 @@
+---
+layout: post
+title: Old Projects, House keeping, good intentions
+excerpt: Just mentioning an old project I never have time to touch upon
+categories:
+    - lisp
+    - programming
+---
+
+
+<div id="table-of-contents">
+<h3>Table of Contents</h3>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Too Much Organization</a></li>
+<li><a href="#sec-2">2 Simplifications</a></li>
+<li><a href="#sec-3">3 Lisp DB?</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-3">
+<h3 id="sec-1">Too Much Organization</h3>
+<div class="outline-text-3" id="text-1">
+
+
+<p>
+I closed by corporate BitBucket account today. BitBucket is a wonderful service.
+I had planned to do a lot with it; but I never got around to it.
+</p>
+<p>
+For a while, I'd setup gerrit and jenkins. And I had this big corporate repository,
+that contained every git project as a subproject.  Everything was going to be
+perfection.
+</p>
+<p>
+But that never came to pass. I guess I made it too hard to develop,
+and I ran out of steam.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-3">
+<h3 id="sec-2">Simplifications</h3>
+<div class="outline-text-3" id="text-2">
+
+
+<p>
+Instead, I took the one project I really, really, want to one day support (lispdb)
+and put it up as it's own repository.  No more subprojects, gerrit or jenkins.
+</p>
+<p>
+Most of the rest of the code I found I didn't really need or want.  For example,
+I once had a ton of Emacs customizations, in a git repository.
+</p>
+<p>
+Then, I deleted that and went with <a href="https://github.com/bbatsov/prelude">Prelude Emacs</a>.  But that didn't work well with
+my Prolog mode, and I found some of it's key bindings frustrating.
+</p>
+<p>
+I deleted that and rewrote my .emacs file:  It's now 180 loc.  Most of it is in
+the form custom-set-variables, configuration for this blog, and configuration for
+email. I don't get lost anymore.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-3">
+<h3 id="sec-3">Lisp DB?</h3>
+<div class="outline-text-3" id="text-3">
+
+
+<p>
+Lisp DB is my itch&hellip; one of them.  It came from a former solo-startup of mine that
+tanked.
+</p>
+<p>
+It's a database. Entirely in lisp. Based upon b*trees.  It has a number of neato
+features:
+</p>
+<ul>
+<li>Acid Compliant
+</li>
+<li>Multi-threaded and thread safe
+</li>
+<li>Extremely fast
+</li>
+<li>Schema-less
+</li>
+<li>Store data of arbitrary size.
+</li>
+</ul>
+
+
+<p>
+It's also cool in that I used it as both data store and file system.  When clients
+uploaded data, the attachments were stored in with the data.  The whole thing
+was based of some Amiga transactional file system, whose name I don't remember.
+</p>
+<p>
+Anyway, that's just one I'd like to get something out of. Release it, even if nobody
+uses it, just to say "THERE, THAT'S DONE."
+</p>
+<p>
+It's not alone. I've got a nutrition parser in Prolog, A provably correct rewrite of
+curlftpfs, and a partially done ACL2 tutorial, and a Math Masters degree to get.
+</p>
+<p>
+One day.
+</p></div>
+</div>
