@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="Your description">
+	<meta name="author" content="Your name">
+	<meta name="generator" content="Hugo 0.36.1" />
+	<title>Augmenting reality; Changing the image in a poster &middot; Warren Wilkinson</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="http://warrenwilkinson.ca/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="http://warrenwilkinson.ca/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="http://warrenwilkinson.ca/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="http://warrenwilkinson.ca/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="http://warrenwilkinson.ca/" class="logo"><strong>Forty</strong> <span>By HTML5 Up</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="http://warrenwilkinson.ca/">Home</a></li>
+            
+                <li><a href="http://warrenwilkinson.ca/showcase">showcase</a></li>
+            
+                <li><a href="http://warrenwilkinson.ca/blog">blog</a></li>
+            
+                <li><a href="http://warrenwilkinson.ca/blogs/ipsum">Generic Blog</a></li>
+            
+                <li><a href="http://warrenwilkinson.ca/elements.html">Elements</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="http://warrenwilkinson.ca/blogs" class="button special fit">Get Started</a></li>
+            
+            
+                <li><a href="http://warrenwilkinson.ca/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Augmenting reality; Changing the image in a poster</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/test.png" alt="" /></span>
+                            
+                            
+
+<p>I&rsquo;m going to show you how to place a picture into another with the
+correct perspective.</p>
+
+<p><strong>ImageA</strong> - Two side by side pictures. A is the drawing crudely placed on the frame. WRONG  The other is it correctly perspective mapped. Correct!</p>
+
+<p>The goal is to map our rectangular source image into an appropriate
+polygon (but for now lets ignore &ldquo;appropriate&rdquo; and just choose an
+arbitrary polygon). Some unknown function maps source image
+coordinates to the correct destintation image coordinates.</p>
+
+<p><img src="/showcase/opencvvideo/sidebyside.png" alt="img" /></p>
+
+<p>(Apple photo by <a href="https://www.flickr.com/photos/hjl/6894623202">hjl</a>, with additions by Imagemagick and <a href="http://www.fmwconcepts.com/imagemagick/grid/index.php">Fred&rsquo;s imagemagick scripts</a>)</p>
+
+<p>So, what is \(f(x,y) = (x&rsquo;,y&rsquo;)\)? How do we find it? and what are it&rsquo;s
+properties?</p>
+
+<h1 id="it-isn-t-entirely-linear">It Isn&rsquo;t (entirely) Linear</h1>
+
+<p><em>This section can be skipped. It exists to motivate the following section on optics.</em></p>
+
+<p>We know the four input corners and where they are going: Top left from
+\((0,0) \rightarrow (26,10)\), top right from \((1024,0) \rightarrow (600,150)\),
+bottom right from \((1024,640) \rightarrow (500,400)\), and
+bottom left from \((0, 640) \rightarrow (35,620)\).</p>
+
+<p>Lets assume a linear relationship and solve for that. We can use our four points (which gives 8 equations) and solve for all the variable
+using a least-square-error solution:</p>
+
+<p>\begin{eqnarray}
+x&rsquo;&amp;=&amp; ax + by + c \\<br />
+y&rsquo;&amp;=&amp; dx + ey + f
+\end{eqnarray}</p>
+
+<p>\begin{equation}
+\begin{bmatrix}    0  &amp;   0 &amp; 1 &amp;      &amp;     &amp;   \\\
+                      &amp;     &amp;   &amp;    0 &amp;   0 &amp; 1 \\<br />
+                1024  &amp;   0 &amp; 1 &amp;      &amp;     &amp;   \\<br />
+                      &amp;     &amp;   &amp; 1024 &amp;   0 &amp; 1 \\<br />
+                1024  &amp; 640 &amp; 1 &amp;      &amp;     &amp;   \\<br />
+                      &amp;     &amp;   &amp; 1024 &amp; 640 &amp; 1 \\<br />
+                   0  &amp; 640 &amp; 1 &amp;      &amp;     &amp;   \\<br />
+                      &amp;     &amp;   &amp;    0 &amp; 640 &amp; 1 \end{bmatrix} \times
+\left[ \begin{array}{c} a \\\ b \\\ c \\\ d \\\ e \\\ f  \end{array} \right]
+= \left[ \begin{array}{c} 26 \\\ 10 \\\ 600 \\\ 150 \\\ 500 \\\ 400 \\\ 35 \\\ 620 \end{array} \right]
+\end{equation}</p>
+
+<p>Here is the python code to compute the solution:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:100%;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">199</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">200</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">201</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">202</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">203</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">204</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">205</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">206</span></span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">207</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">208</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">209</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">210</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy
+a <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>array([[   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],
+                 [   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>],
+                 [<span style="color:#ae81ff">1024</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],
+                 [   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1024</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>],
+                 [<span style="color:#ae81ff">1024</span>,<span style="color:#ae81ff">640</span>,<span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],
+                 [   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1024</span>,<span style="color:#ae81ff">640</span>,<span style="color:#ae81ff">1</span>],
+<span style="display:block;width:100%;background-color:#3c3d38">                 [   <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">640</span>,<span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],
+</span>                 [   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">640</span>,<span style="color:#ae81ff">1</span>]])
+b <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">26</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">600</span>,<span style="color:#ae81ff">150</span>,<span style="color:#ae81ff">500</span>,<span style="color:#ae81ff">400</span>,<span style="color:#ae81ff">35</span>,<span style="color:#ae81ff">620</span>])
+result <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>lstsq(a, b)
+<span style="color:#66d9ef">print</span> result[<span style="color:#ae81ff">0</span>]</code></pre></td></tr></table>
+</div>
+</div>
+
+<pre><code>[  5.07324219e-01  -7.10937500e-02   5.32500000e+01  -3.90625000e-02
+   6.71875000e-01   1.00000000e+02]
+</code></pre>
+
+<p>What does this look like?</p>
+
+<p>\begin{eqnarray}
+x&rsquo;&amp;=&amp;  0.507x - .0711y + .5325 \\<br />
+y&rsquo;&amp;=&amp; -.0391x + .672y + .01
+\end{eqnarray}</p>
+
+<p><img src="/showcase/opencvvideo/sidebyside2.png" alt="img" /></p>
+
+<p>So, this is not a good fit. What we have just built is the most
+general type of 2D linear transformation: an affine transformation.
+In an affine transformation, parallel lines remain parallel but angles
+may change.  However, notice that in the perspective transform
+<strong>parallel lines do not remain parallel</strong>.  What&rsquo;s going on?</p>
+
+<h1 id="homography-matrices-homogeneous-coordinates">?Homography Matrices? Homogeneous Coordinates</h1>
+
+<h1 id="something">Something</h1>
+
+<p>What to cover&#x2026;</p>
+
+<p>What exactly is going on&#x2026; what am I doing here?</p>
+
+<p>Do I need to cover projection?</p>
+
+<p>Do I need to cover homography?  Probably..  I think I can say, simply
+that it&rsquo;s possible to apply a arbitrary perspective transforms.  These
+look like 4x?? matrices.  Do I need to go deeper into showing how that
+maps to planes?  Probably can avoid this.</p>
+
+<p>You only need 4 points to compute this perspective&#x2026;. but at this point. it feels
+like I need to go deeper and explain WHY this works&#x2026;</p>
+
+<p>Why can&rsquo;t I just do a matrix solve?  Mx = a?  Basically, this point maps to this point..
+this point maps to this point, etc.  Okay, sure &#x2013; but to WHAT function are you going to
+fit the map?   For example, scaling?  Here is where I need to talk about images and image
+formation.</p>
+
+<p>Okay, so now we know what the function will be.. and can see that 4 points is enough to
+solve the function.  Why do we need to use the SVD trick?  Because some variables aren&rsquo;t linearly
+dependent?  A rank issue&#x2026; I think.</p>
+
+<p>Great, so here comes openCV now&#x2026; now I need to track 4 points.  Note that I could also just define
+4 points and their transformations&#x2026;. this is how most video editing software would work &#x2013; the points
+and their paths are defined (by a combination of algorithms and human tweaking and inspection) and then
+you just go.</p>
+
+<p>Here is some code&#x2026; and huzzah. Look at that.</p>
+
+<p>Limitations:
+  What about something in front?
+  Automatically finding features is so-so.
+  The image doesn&rsquo;t fit the scene (too bright, not shadowed, etc).
+  It&rsquo;s just a 2D picture &#x2013; I&rsquo;m not making the picture look like a window into another world.</p>
+
+<p>Source code download. Happy christmas!</p>
+
+<h1 id="some-text">Some text</h1>
+
+<p>This is some text. And now I&rsquo;m going to pub a bulleted list in here&#x2026;</p>
+
+<ul>
+<li>item 1</li>
+<li>item 2</li>
+<li>item 3</li>
+</ul>
+
+<p>Horray!</p>
+
+<h1 id="source-code">Source code</h1>
+
+<p><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:100%;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">199</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">200</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">myfun</span>(a):
+    <span style="color:#66d9ef">return</span> a <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span></code></pre></td></tr></table>
+</div>
+</div></p>
+
+<h1 id="a-table">A table!</h1>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">**a**</th>
+<th scope="col" class="org-left">**b**</th>
+<th scope="col" class="org-left">**c**</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="org-left">a</td>
+<td class="org-left">o</td>
+<td class="org-left">o</td>
+</tr>
+</tbody>
+</table>
+
+<p>I don&rsquo;t seem to do tables very well.</p>
+
+<h1 id="an-image">An image</h1>
+
+<p><img src="/showcase/opencvvideo/test.png" alt="img" /></p>
+
+                        </div>
+                    </section>
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://www.twitter.com" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                
+                    <li><a href="https://www.facebook.com" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                
+                    <li><a href="https://www.instagram.com" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                
+                    <li><a href="https://www.github.com" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Warren Wilkinson</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- MathJax -->
+    <script type="text/javascript" async
+	    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- jQuery -->
+    <script src="http://warrenwilkinson.ca/js/jquery.min.js"></script>
+    <script src="http://warrenwilkinson.ca/js/jquery.scrolly.min.js"></script>
+    <script src="http://warrenwilkinson.ca/js/jquery.scrollex.min.js"></script>
+    <script src="http://warrenwilkinson.ca/js/skel.min.js"></script>
+    <script src="http://warrenwilkinson.ca/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="http://warrenwilkinson.ca/js/main.js"></script>
+
+    
+
+    
+
+
+    </body>
+</html>

@@ -1,5 +1,0 @@
-name: Warren Wilkinson
-markdown: redcarpet
-pygments: true
-exclude: ["org"]
-permalink: /:year-:month-:day-:title.html
