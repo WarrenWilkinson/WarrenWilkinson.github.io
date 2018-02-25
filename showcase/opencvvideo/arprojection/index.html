@@ -53,20 +53,10 @@
             
                 <li><a href="http://www.warrenwilkinson.ca/showcase">showcase</a></li>
             
-                <li><a href="http://www.warrenwilkinson.ca/blog">blog</a></li>
-            
-                <li><a href="http://www.warrenwilkinson.ca/blogs/ipsum">Generic Blog</a></li>
-            
-                <li><a href="http://www.warrenwilkinson.ca/elements.html">Elements</a></li>
-            
 
         </ul>
         <ul class="actions vertical">
             
-                <li><a href="http://www.warrenwilkinson.ca/blogs" class="button special fit">Get Started</a></li>
-            
-            
-                <li><a href="http://www.warrenwilkinson.ca/" class="button fit">Log In</a></li>
             
         </ul>
     </nav>
@@ -172,105 +162,22 @@ In an affine transformation, parallel lines remain parallel but angles
 may change.  However, notice that in the perspective transform
 <strong>parallel lines do not remain parallel</strong>.  What&rsquo;s going on?</p>
 
-<h1 id="homography-matrices-homogeneous-coordinates">?Homography Matrices? Homogeneous Coordinates</h1>
+<h1 id="introducing-3d-space">Introducing 3D space</h1>
 
-<h1 id="something">Something</h1>
+<p>Affline geometry is like two pairs of scissors whose blade-tips are
+joined.  As you open and close one pair, the other mirrors it.  The
+blades frame an askew box.</p>
 
-<p>What to cover&#x2026;</p>
+<p><img src="/showcase/opencvvideo/scissors.png" alt="img" /></p>
 
-<p>What exactly is going on&#x2026; what am I doing here?</p>
+<p>Perspective geometry is very different: It describes what you see
+after embedding your 2D plane in 3D space.</p>
 
-<p>Do I need to cover projection?</p>
+<p><img src="/showcase/opencvvideo/astest.png" alt="img" /></p>
 
-<p>Do I need to cover homography?  Probably..  I think I can say, simply
-that it&rsquo;s possible to apply a arbitrary perspective transforms.  These
-look like 4x?? matrices.  Do I need to go deeper into showing how that
-maps to planes?  Probably can avoid this.</p>
+<h1 id="under-construction">Under Construction</h1>
 
-<p>You only need 4 points to compute this perspective&#x2026;. but at this point. it feels
-like I need to go deeper and explain WHY this works&#x2026;</p>
-
-<p>Why can&rsquo;t I just do a matrix solve?  Mx = a?  Basically, this point maps to this point..
-this point maps to this point, etc.  Okay, sure &#x2013; but to WHAT function are you going to
-fit the map?   For example, scaling?  Here is where I need to talk about images and image
-formation.</p>
-
-<p>Okay, so now we know what the function will be.. and can see that 4 points is enough to
-solve the function.  Why do we need to use the SVD trick?  Because some variables aren&rsquo;t linearly
-dependent?  A rank issue&#x2026; I think.</p>
-
-<p>Great, so here comes openCV now&#x2026; now I need to track 4 points.  Note that I could also just define
-4 points and their transformations&#x2026;. this is how most video editing software would work &#x2013; the points
-and their paths are defined (by a combination of algorithms and human tweaking and inspection) and then
-you just go.</p>
-
-<p>Here is some code&#x2026; and huzzah. Look at that.</p>
-
-<p>Limitations:
-  What about something in front?
-  Automatically finding features is so-so.
-  The image doesn&rsquo;t fit the scene (too bright, not shadowed, etc).
-  It&rsquo;s just a 2D picture &#x2013; I&rsquo;m not making the picture look like a window into another world.</p>
-
-<p>Source code download. Happy christmas!</p>
-
-<h1 id="some-text">Some text</h1>
-
-<p>This is some text. And now I&rsquo;m going to pub a bulleted list in here&#x2026;</p>
-
-<ul>
-<li>item 1</li>
-<li>item 2</li>
-<li>item 3</li>
-</ul>
-
-<p>Horray!</p>
-
-<h1 id="source-code">Source code</h1>
-
-<p><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:100%;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">199</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">200</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">myfun</span>(a):
-    <span style="color:#66d9ef">return</span> a <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span></code></pre></td></tr></table>
-</div>
-</div></p>
-
-<h1 id="a-table">A table!</h1>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">**a**</th>
-<th scope="col" class="org-left">**b**</th>
-<th scope="col" class="org-left">**c**</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td class="org-left">a</td>
-<td class="org-left">o</td>
-<td class="org-left">o</td>
-</tr>
-</tbody>
-</table>
-
-<p>I don&rsquo;t seem to do tables very well.</p>
-
-<h1 id="an-image">An image</h1>
-
-<p><img src="/showcase/opencvvideo/test.png" alt="img" /></p>
+<p><strong>I&rsquo;m still working on this article</strong>. Check back soon for updates.</p>
 
                         </div>
                     </section>
