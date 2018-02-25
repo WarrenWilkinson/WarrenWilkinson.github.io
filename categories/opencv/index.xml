@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Opencv on Warren Wilkinson</title>
-    <link>http://warrenwilkinson.ca/categories/opencv/</link>
+    <link>http://www.warrenwilkinson.ca/categories/opencv/</link>
     <description>Recent content in Opencv on Warren Wilkinson</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 10 Feb 2018 06:28:43 -0800</lastBuildDate>
     
-	<atom:link href="http://warrenwilkinson.ca/categories/opencv/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.warrenwilkinson.ca/categories/opencv/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>OpenCV Image Onto Video</title>
-      <link>http://warrenwilkinson.ca/blogs/opencvprojection1/</link>
+      <link>http://www.warrenwilkinson.ca/blogs/opencvprojection1/</link>
       <pubDate>Sat, 10 Feb 2018 06:28:43 -0800</pubDate>
       
-      <guid>http://warrenwilkinson.ca/blogs/opencvprojection1/</guid>
+      <guid>http://www.warrenwilkinson.ca/blogs/opencvprojection1/</guid>
       <description>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.
    *row* *col* *Third     hi how    are you    there today? k    199200 def function(a): return a + 1   Okay, there is enough wrong with this to make it preferable to just use org mode to export the contents.</description>
     </item>
