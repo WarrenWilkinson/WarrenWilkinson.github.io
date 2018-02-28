@@ -166,7 +166,8 @@ may change.  However, notice that in the perspective transform
 
 <p>Affline geometry is like two pairs of scissors whose blade-tips are
 joined.  As you open and close one pair, the other mirrors it.  The
-blades frame an askew box.</p>
+blades frame an askew box. You can also lengthen and shorten pairs of
+parallel-blade arm lengths.</p>
 
 <p><img src="/showcase/opencvvideo/scissors.png" alt="img" /></p>
 
@@ -177,7 +178,30 @@ catching them on a plane just in front of your eyes.</p>
 
 <p><img src="/showcase/opencvvideo/astest.png" alt="img" /></p>
 
-<h1 id="under-construction">Under Construction</h1>
+<p>So, lets look at the equation for an intersection between a ray from
+eye to image and the plane z=1.  The point on the image we will choose
+is the bottom right corner (coordinates W-1,H-1 of the picture, but
+coordinate 0.5, 0.5, 4 in 3D space).  The eye is located at
+coordinates 0,0,0.</p>
+
+<p><img src="/showcase/opencvvideo/ascoordinates.png" alt="img" /></p>
+
+<p>We can find the intersection point by just setting the plane equation
+equal to the line equation. So we can see from the line equation below
+that when \(t = .25\), then the points (z = 1) (and it&rsquo;s on the plane).</p>
+
+<p>\begin{eqnarray}
+0x + 0y + z&amp;=&amp;1&amp; \quad\textrm{plane} \\<br />
+(0.5x + 0.5y + 4z)*t&amp;=&amp;P(t)&amp;\quad\textrm{line}
+\end{eqnarray}</p>
+
+<p>Note that we can now trivially compute the x and y coordinate of the
+intersection with the plane. It&rsquo;s just (x/z) and \(y/z\)! This useful
+fact is what makes homogenous coordinates possible. But we&rsquo;ll skip
+that and solve for a perspective transform without introducing that
+concept.</p>
+
+<h1 id="perspective-transform">Perspective Transform</h1>
 
 <p><strong>I&rsquo;m still working on this article</strong>. Check back soon for updates.</p>
 
