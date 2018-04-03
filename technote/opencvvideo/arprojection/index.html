@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<meta name="description" content="Your description">
 	<meta name="author" content="Your name">
-	<meta name="generator" content="Hugo 0.36.1" />
+	<meta name="generator" content="Hugo 0.38" />
 	<title>Augmenting reality; Changing the image in a poster &middot; Warren Wilkinson</title>
 	<!-- Stylesheets -->
 	
@@ -51,7 +51,7 @@
             
                 <li><a href="http://www.warrenwilkinson.ca/">Home</a></li>
             
-                <li><a href="http://www.warrenwilkinson.ca/showcase">showcase</a></li>
+                <li><a href="http://www.warrenwilkinson.ca/technote">technote</a></li>
             
 
         </ul>
@@ -85,7 +85,7 @@ polygon (but for now lets ignore &ldquo;appropriate&rdquo; and just choose an
 arbitrary polygon). Some unknown function maps source image
 coordinates to the correct destintation image coordinates.</p>
 
-<p><img src="/showcase/opencvvideo/sidebyside.png" alt="img" /></p>
+<p><img src="/technote/opencvvideo/sidebyside.png" alt="img" /></p>
 
 <p>(Apple photo by <a href="https://www.flickr.com/photos/hjl/6894623202">hjl</a>, with additions by Imagemagick and <a href="http://www.fmwconcepts.com/imagemagick/grid/index.php">Fred&rsquo;s imagemagick scripts</a>)</p>
 
@@ -125,8 +125,20 @@ y&rsquo;&amp;=&amp; dx + ey + f
 <p>Here is the python code to compute the solution:</p>
 
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:100%;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">199</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">200</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">201</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">202</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">203</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">204</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">205</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">206</span></span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">207</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">208</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">209</span><span style="margin-right:0.4em;padding:00.4em00.4em;display:block;color:#7c7c79">210</span></code></pre></td>
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">199
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">200
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">201
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">202
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">203
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">204
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">205
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">206
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">207
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">208
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">209
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">210
+</span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy
 a <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>array([[   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],
@@ -154,7 +166,7 @@ x&rsquo;&amp;=&amp;  0.507x - .0711y + .5325 \\<br />
 y&rsquo;&amp;=&amp; -.0391x + .672y + .01
 \end{eqnarray}</p>
 
-<p><img src="/showcase/opencvvideo/sidebyside2.png" alt="img" /></p>
+<p><img src="/technote/opencvvideo/sidebyside2.png" alt="img" /></p>
 
 <p>So, this is not a good fit. What we have just built is the most
 general type of 2D linear transformation: an affine transformation.
@@ -169,14 +181,14 @@ joined.  As you open and close one pair, the other mirrors it.  The
 blades frame an askew box. You can also lengthen and shorten pairs of
 parallel-blade arm lengths.</p>
 
-<p><img src="/showcase/opencvvideo/scissors.png" alt="img" /></p>
+<p><img src="/technote/opencvvideo/scissors.png" alt="img" /></p>
 
 <p>Perspective geometry is very different: It describes what you see
 after embedding your 2D plane in 3D space.  In other words, it&rsquo;s like
 your object is throwing off rays towards your eyeballs and you&rsquo;re
 catching them on a plane just in front of your eyes.</p>
 
-<p><img src="/showcase/opencvvideo/astest.png" alt="img" /></p>
+<p><img src="/technote/opencvvideo/astest.png" alt="img" /></p>
 
 <p>So, lets look at the equation for an intersection between a ray from
 eye to image and the plane z=1.  The point on the image we will choose
@@ -184,24 +196,51 @@ is the bottom right corner (coordinates W-1,H-1 of the picture, but
 coordinate 0.5, 0.5, 4 in 3D space).  The eye is located at
 coordinates 0,0,0.</p>
 
-<p><img src="/showcase/opencvvideo/ascoordinates.png" alt="img" /></p>
+<p><img src="/technote/opencvvideo/ascoordinates.png" alt="img" /></p>
 
 <p>We can find the intersection point by just setting the plane equation
-equal to the line equation. So we can see from the line equation below
-that when \(t = .25\), then the points (z = 1) (and it&rsquo;s on the plane).</p>
+equal to the line equation and solving for &rsquo;t&rsquo; (t being the distance along the line). From the line equation below,
+it&rsquo;s apparent than when (t = .25) then it is intersecting the plane.</p>
 
 <p>\begin{eqnarray}
 0x + 0y + z&amp;=&amp;1&amp; \quad\textrm{plane} \\<br />
-(0.5x + 0.5y + 4z)*t&amp;=&amp;P(t)&amp;\quad\textrm{line}
+(0.5x + 0.5y + 4z) \times t&amp;=&amp;P(t)&amp;\quad\textrm{line}
 \end{eqnarray}</p>
 
-<p>Note that we can now trivially compute the x and y coordinate of the
-intersection with the plane. It&rsquo;s just (x/z) and \(y/z\)! This useful
-fact is what makes homogenous coordinates possible. But we&rsquo;ll skip
-that and solve for a perspective transform without introducing that
-concept.</p>
+<p>We can also compute the x and y coordinate of the intersection with
+the plane: it&rsquo;s just (x/z) and \(y/z\)! This useful fact is because we
+set our plane at z=1.</p>
 
 <h1 id="perspective-transform">Perspective Transform</h1>
+
+<p>Okay, so if we have a point on the screen, it obeys \(x<em>{screen} = x</em>{3D}/z<em>{3D}\)
+and \(y</em>{screen} = y<em>{3D}/z</em>{3D}\).  It&rsquo;s like we&rsquo;ve cast a ray from our eye outward &#x2013; and the first
+thing we hit effectively decides this points color.</p>
+
+<p>If we have four points, we have four rays. We must place a rectangle
+so that its corners lie on these rays. There may be only one way to do
+this, or infinitely many.</p>
+
+<p>In our minds eye, take the first ray and &lsquo;connect it by line&rsquo; to
+another ray, then connect again to another ray so that you&rsquo;ve got an
+&lsquo;L&rsquo;. In a valid solution, that &lsquo;L&rsquo; is two orthogonal lines. Finally,
+in a valid solution you can mirror that L to complete the rectangle
+and it touches all 4 rays.</p>
+
+<h2 id="these-lines-x2026">These lines&#x2026;</h2>
+
+<p>That&rsquo;s what we&rsquo;re looking for. So 4 lines&#x2026; that touch all these various
+ways and have the same angles and stuff&#x2026;</p>
+
+<p>The lines have the same equations&#x2026; just offset to different points. I also
+have 4 corners&#x2026;</p>
+
+<p>&#x2026; and I&rsquo;m stuck.  Guess I don&rsquo;t know my material that well after all.  Time to break
+out a book and get this resolved.</p>
+
+<p>FROM MY BOOK, Multiple View Geometry, it shows that IF I have the same eye position,
+than all 2D planes as seen from that eye position are related by a projective transform.
+So that&rsquo;s the key I&rsquo;ll need to talk about.</p>
 
 <p><strong>I&rsquo;m still working on this article</strong>. Check back soon for updates.</p>
 

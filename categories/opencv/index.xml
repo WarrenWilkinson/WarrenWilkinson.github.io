@@ -18,7 +18,7 @@
       
       <guid>http://www.warrenwilkinson.ca/blogs/opencvprojection1/</guid>
       <description>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.
-   *row* *col* *Third     hi how    are you    there today? k    199200 def function(a): return a + 1   Okay, there is enough wrong with this to make it preferable to just use org mode to export the contents.</description>
+   *row* *col* *Third     hi how    are you    there today? k    199 200  def function(a): return a + 1   Okay, there is enough wrong with this to make it preferable to just use org mode to export the contents.</description>
     </item>
     
   </channel>

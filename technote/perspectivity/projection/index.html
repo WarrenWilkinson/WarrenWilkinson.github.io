@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="Your description">
+	<meta name="author" content="Your name">
+	<meta name="generator" content="Hugo 0.38" />
+	<title>Perspectivity; Extracting and Changing the image in a poster &middot; Warren Wilkinson</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="http://www.warrenwilkinson.ca/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="http://www.warrenwilkinson.ca/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="http://www.warrenwilkinson.ca/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="http://www.warrenwilkinson.ca/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="http://www.warrenwilkinson.ca/" class="logo"><strong>Forty</strong> <span>By HTML5 Up</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="http://www.warrenwilkinson.ca/">Home</a></li>
+            
+                <li><a href="http://www.warrenwilkinson.ca/technote">technote</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Perspectivity; Extracting and Changing the image in a poster</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/catremap.jpg" alt="" /></span>
+                            
+                            
+
+<p>Here is a python program that uses cv2 to replace the image in a
+poster. First identify the four corners:</p>
+
+<p><img src="/technote/perspectivity/marked.jpg" alt="img" /></p>
+
+<p>Then compute the <em>perspectivity</em> through these four points in the
+camera image onto a rectangular plane. This will be a projection
+matrix that can be used to extract the picture from the frame.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2
+<span style="color:#f92672">import</span> numpy
+camera_image_points <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>array([
+    (<span style="color:#ae81ff">191</span>,<span style="color:#ae81ff">31</span>), <span style="color:#75715e"># Top left</span>
+    (<span style="color:#ae81ff">330</span>,<span style="color:#ae81ff">27</span>), <span style="color:#75715e"># Top right</span>
+    (<span style="color:#ae81ff">328</span>,<span style="color:#ae81ff">225</span>), <span style="color:#75715e"># Bottom right</span>
+    (<span style="color:#ae81ff">187</span>,<span style="color:#ae81ff">217</span>)  <span style="color:#75715e"># Bottom left</span>
+], dtype<span style="color:#f92672">=</span>numpy<span style="color:#f92672">.</span>float32)
+h <span style="color:#f92672">=</span> <span style="color:#ae81ff">250</span>
+w <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>
+remapped_points <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>array([
+    (<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>), <span style="color:#75715e"># Top left</span>
+    (w,<span style="color:#ae81ff">0</span>), <span style="color:#75715e"># Top right</span>
+    (w,h), <span style="color:#75715e"># Bottom right</span>
+    (<span style="color:#ae81ff">0</span>,h)  <span style="color:#75715e"># Bottom left</span>
+], dtype<span style="color:#f92672">=</span>numpy<span style="color:#f92672">.</span>float32)
+M <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>getPerspectiveTransform(camera_image_points,
+				remapped_points)
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;M is...&#34;</span>
+<span style="color:#66d9ef">print</span> M
+img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#34;frame_picture.jpg&#34;</span>)
+inside_frame <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpPerspective(img, M, (w,h))
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#39;inside_frame.jpg&#39;</span>,inside_frame)</code></pre></div>
+
+<p><img src="/technote/perspectivity/inside_frame.jpg" alt="img" /></p>
+
+<p>This projection matrix can also be used to replace the image in the
+frame.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2
+<span style="color:#f92672">import</span> numpy
+M <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>matrix([[<span style="color:#ae81ff">1.68508672e+00</span>, <span style="color:#ae81ff">3.62384241e-02</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">3.22974955e+02</span>],
+		  [<span style="color:#ae81ff">4.32301983e-02</span>, <span style="color:#ae81ff">1.50224939e+00</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">5.48266990e+01</span>],
+		  [<span style="color:#ae81ff">5.08113892e-04</span>, <span style="color:#ae81ff">1.01219194e-04</span>, <span style="color:#ae81ff">1.00000000e+00</span>]])
+M <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>inv(M)
+img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#34;frame_picture.jpg&#34;</span>)
+h <span style="color:#f92672">=</span> <span style="color:#ae81ff">250</span>
+w <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>
+cat <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>resize(cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#34;happycat.jpg&#34;</span>), (w, h))
+borderValue <span style="color:#f92672">=</span> (<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>)
+cat_remap <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpPerspective(cat, M, (img<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>], img<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]), borderValue<span style="color:#f92672">=</span>borderValue)
+outside<span style="color:#f92672">=</span>cat_remap[:,:] <span style="color:#f92672">==</span> borderValue
+cat_remap[outside] <span style="color:#f92672">=</span> img[outside]
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#39;catremap.jpg&#39;</span>,cat_remap)</code></pre></div>
+
+<p><img src="/technote/perspectivity/catremap.jpg" alt="img" /></p>
+
+<p>This projection matrix is a perspectivity, a special case of
+projection (having only 6 degrees of freedom instead of 8).</p>
+
+<p>There are four lines in P<sup>2</sup> (2D perspective space) that go through the
+origin to intersect the image plane at the previously marked points in
+the camera image.  These lines also touch another plane, somewhere, on
+which is formed the rectangular inside frame image.</p>
+
+<p>The general form of a P<sup>2</sup> projection is:</p>
+
+<p>\begin{equation}
+\left( \begin{array}{c} x&rsquo;_1 \\\ x&rsquo;_2 \\\ x&rsquo;_3 \end{array} \right) =
+\begin{bmatrix}
+    h_{11} &amp; h_{12} &amp; h_{13} \\<br />
+    h_{21} &amp; h_{22} &amp; h_{23} \\<br />
+    h_{31} &amp; h_{32} &amp; h_{33}
+\end{bmatrix}
+\left( \begin{array}{c} x_1 \\\ x_2 \\\ x_3 \end{array} \right)
+\end{equation}</p>
+
+<p>This relationship defines u and v (the coordinates in the remapped
+image) in terms of the camera image (x<sub>1</sub> and x<sub>2</sub> with x<sub>3</sub> = 1).</p>
+
+<p>\begin{eqnarray}
+u &amp;=&amp; x&rsquo;_1 / x&rsquo;_3 = (x_1 h_{11} + x_2 h_{12} + x_3 h_{13}) / x&rsquo;_3 \\<br />
+v &amp;=&amp; x&rsquo;_2 / x&rsquo;_3 = (x_1 h_{21} + x_2 h_{22} + x_3 h_{23}) / x&rsquo;_3 \\<br />
+x&rsquo;_3 &amp;=&amp; x_1 h_{31} + x_2 h_{32} + x_3 h_{33}
+\end{eqnarray}</p>
+
+<p>And finally into a form suitable for solving:</p>
+
+<p>\begin{eqnarray}
+x_1 h_{11}  + x_2 h_{12} + x_3 h_{13} - h_{31} x_1 u - h_{32} x_2 u - h_{33} x_3 u  &amp;=&amp; 0 \\<br />
+x_1 h_{21}  + x_2 h_{22} + x_3 h_{23} - h_{31} x_1 v - h_{32} x_2 v - h_{33} x_3 v  &amp;=&amp; 0
+\end{eqnarray}</p>
+
+<p>The four remapped points in this example can be combined with the
+above to create an 8 row, 9 column matrix:</p>
+
+<p>\begin{equation}
+\begin{bmatrix} 191   &amp;   31 &amp;   1 &amp;      &amp;      &amp;      &amp; -1\times 191\times 0    &amp;  -1\times 31\times 0  &amp; -1\times 1 \times 0   \\\
+                      &amp;      &amp;     &amp;  191 &amp;   31 &amp;    1 &amp; -1\times 191\times 0    &amp;  -1\times 31\times 0  &amp; -1\times 1 \times 0   \\<br />
+                330   &amp;   27 &amp;   1 &amp;      &amp;      &amp;      &amp; -1\times 330\times 200  &amp;  -1\times 27\times 200  &amp; -1\times 1 \times 200   \\\
+                      &amp;      &amp;     &amp;  330 &amp;   27 &amp;    1 &amp; -1\times 330\times 0    &amp;  -1\times 27\times 0  &amp; -1\times 1 \times 0   \\<br />
+                328   &amp;  225 &amp;   1 &amp;      &amp;      &amp;      &amp; -1\times 328\times 200    &amp; -1\times 225\times 200  &amp; -1\times 1 \times 200   \\\
+                      &amp;      &amp;     &amp;  328 &amp;  225 &amp;    1 &amp; -1\times 328\times 250    &amp; -1\times 225\times 250  &amp; -1\times 1 \times 250   \\<br />
+                187   &amp;  217 &amp;   1 &amp;      &amp;      &amp;      &amp; -1\times 187\times 0    &amp; -1\times 217\times 0  &amp; -1\times 1 \times 0   \\\
+                      &amp;      &amp;     &amp;  187 &amp;  217 &amp;    1 &amp; -1\times 187\times 250    &amp; -1\times 217\times 250  &amp; -1\times 1 \times 250 \end{bmatrix} \times
+\left[ \begin{array}{c} h_{11} \\\ h_{12} \\\ h_{13} \\\ h_{21} \\\ h_{22} \\\ h_{23} \\\ h_{31} \\\ h_{32} \\\ h_{33} \end{array} \right]
+= 0
+\end{equation}</p>
+
+<p>This pseudo-inverse of this matrix can be found using singular value
+decomposition.</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy
+A <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>matrix([[<span style="color:#ae81ff">191</span>,  <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>,      <span style="color:#ae81ff">0</span>,      <span style="color:#ae81ff">0</span>,    <span style="color:#ae81ff">0</span>],
+		  [  <span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">191</span>,  <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">1</span>,      <span style="color:#ae81ff">0</span>,      <span style="color:#ae81ff">0</span>,    <span style="color:#ae81ff">0</span>],
+		  [<span style="color:#ae81ff">330</span>,  <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">66000</span>,  <span style="color:#f92672">-</span><span style="color:#ae81ff">5400</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>],
+		  [  <span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">330</span>,  <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">1</span>,      <span style="color:#ae81ff">0</span>,      <span style="color:#ae81ff">0</span>,    <span style="color:#ae81ff">0</span>],
+		  [<span style="color:#ae81ff">328</span>, <span style="color:#ae81ff">225</span>, <span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">65600</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">45000</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>],
+		  [  <span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">328</span>, <span style="color:#ae81ff">225</span>, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">82000</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">56250</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">250</span>],
+		  [<span style="color:#ae81ff">187</span>, <span style="color:#ae81ff">217</span>, <span style="color:#ae81ff">1</span>,   <span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>,      <span style="color:#ae81ff">0</span>,      <span style="color:#ae81ff">0</span>,    <span style="color:#ae81ff">0</span>],
+		  [  <span style="color:#ae81ff">0</span>,   <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">187</span>, <span style="color:#ae81ff">217</span>, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">46750</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">54270</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">250</span>]])
+ATA <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>matmul(numpy<span style="color:#f92672">.</span>transpose(A), A)
+U,s,V <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>svd(ATA)
+
+<span style="color:#75715e"># Find the first value in s that&#39;s close to zero.</span>
+UT <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>transpose(U)
+M <span style="color:#f92672">=</span> None  
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">9</span>):
+    <span style="color:#66d9ef">if</span> s[i] <span style="color:#f92672">&lt;</span> <span style="color:#f92672">.</span><span style="color:#ae81ff">000001</span>:
+       <span style="color:#75715e"># Divide out the last value, which is a scaling factor.</span>
+       M <span style="color:#f92672">=</span> numpy<span style="color:#f92672">.</span>reshape(UT[i]<span style="color:#f92672">/</span>UT[i,<span style="color:#ae81ff">8</span>], (<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>))
+       <span style="color:#66d9ef">break</span>
+
+<span style="color:#66d9ef">print</span> M</code></pre></div></p>
+
+<h1 id="references">References</h1>
+
+<ul>
+<li>Richard Hartley and Andrew Zisserman. 2003. Multiple View Geometry in Computer Vision (2 ed.). Cambridge University Press, New York, NY, USA.</li>
+</ul>
+
+                        </div>
+                    </section>
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://github.com/WarrenWilkinson" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/warrenwilkinson2/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+                    <li><a href="https://stackoverflow.com/users/story/2250110" class="icon alt fa-stack-overflow" target="_blank"><span class="label">Stack Overflow</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Warren Wilkinson</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- MathJax -->
+    <script type="text/javascript" async
+	    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- jQuery -->
+    <script src="http://www.warrenwilkinson.ca/js/jquery.min.js"></script>
+    <script src="http://www.warrenwilkinson.ca/js/jquery.scrolly.min.js"></script>
+    <script src="http://www.warrenwilkinson.ca/js/jquery.scrollex.min.js"></script>
+    <script src="http://www.warrenwilkinson.ca/js/skel.min.js"></script>
+    <script src="http://www.warrenwilkinson.ca/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="http://www.warrenwilkinson.ca/js/main.js"></script>
+
+    
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-114851695-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+    
+
+
+    </body>
+</html>

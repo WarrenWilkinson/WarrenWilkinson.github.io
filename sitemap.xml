@@ -3,7 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://www.warrenwilkinson.ca/showcase/opencvvideo/arprojection/</loc>
+    <loc>http://www.warrenwilkinson.ca/technote/perspectivity/projection/</loc>
+    <lastmod>2018-04-01T06:28:43-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.warrenwilkinson.ca/technote/opencvvideo/arprojection/</loc>
     <lastmod>2018-02-10T06:28:43-08:00</lastmod>
   </url>
   
@@ -56,8 +61,8 @@
   </url>
   
   <url>
-    <loc>http://www.warrenwilkinson.ca/showcase/</loc>
-    <lastmod>2018-02-10T06:28:43-08:00</lastmod>
+    <loc>http://www.warrenwilkinson.ca/categories/opencv-projection-other/</loc>
+    <lastmod>2018-04-01T06:28:43-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -67,8 +72,14 @@
   </url>
   
   <url>
+    <loc>http://www.warrenwilkinson.ca/technote/</loc>
+    <lastmod>2018-04-01T06:28:43-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.warrenwilkinson.ca/</loc>
-    <lastmod>2018-02-10T06:28:43-08:00</lastmod>
+    <lastmod>2018-04-01T06:28:43-08:00</lastmod>
     <priority>0</priority>
   </url>
   
