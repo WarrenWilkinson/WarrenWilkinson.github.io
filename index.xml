@@ -23,17 +23,6 @@ import cv2 import numpy camera_image_points = numpy.array([ (191,31), # Top left
     </item>
     
     <item>
-      <title>Augmenting reality; Changing the image in a poster</title>
-      <link>http://www.warrenwilkinson.ca/technote/opencvvideo/arprojection/</link>
-      <pubDate>Sat, 10 Feb 2018 06:28:43 -0800</pubDate>
-      
-      <guid>http://www.warrenwilkinson.ca/technote/opencvvideo/arprojection/</guid>
-      <description>I&amp;rsquo;m going to show you how to place a picture into another with the correct perspective.
-ImageA - Two side by side pictures. A is the drawing crudely placed on the frame. WRONG The other is it correctly perspective mapped. Correct!
-The goal is to map our rectangular source image into an appropriate polygon (but for now lets ignore &amp;ldquo;appropriate&amp;rdquo; and just choose an arbitrary polygon). Some unknown function maps source image coordinates to the correct destintation image coordinates.</description>
-    </item>
-    
-    <item>
       <title>OpenCV Image Onto Video</title>
       <link>http://www.warrenwilkinson.ca/blogs/opencvprojection1/</link>
       <pubDate>Sat, 10 Feb 2018 06:28:43 -0800</pubDate>

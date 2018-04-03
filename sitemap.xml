@@ -8,11 +8,6 @@
   </url>
   
   <url>
-    <loc>http://www.warrenwilkinson.ca/technote/opencvvideo/arprojection/</loc>
-    <lastmod>2018-02-10T06:28:43-08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://www.warrenwilkinson.ca/blogs/opencvprojection1/</loc>
     <lastmod>2018-02-10T06:28:43-08:00</lastmod>
   </url>
@@ -50,12 +45,6 @@
   
   <url>
     <loc>http://www.warrenwilkinson.ca/categories/opencv/</loc>
-    <lastmod>2018-02-10T06:28:43-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.warrenwilkinson.ca/categories/opencv-other/</loc>
     <lastmod>2018-02-10T06:28:43-08:00</lastmod>
     <priority>0</priority>
   </url>
