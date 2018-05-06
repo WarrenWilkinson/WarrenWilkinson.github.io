@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://www.warrenwilkinson.ca/technote/motionhistory/mhi/</loc>
+    <lastmod>2018-05-02T06:28:43-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.warrenwilkinson.ca/technote/perspectivity/projection/</loc>
     <lastmod>2018-04-01T06:28:43-08:00</lastmod>
   </url>
@@ -50,6 +55,12 @@
   </url>
   
   <url>
+    <loc>http://www.warrenwilkinson.ca/categories/opencv-hu-features-motion-history-images/</loc>
+    <lastmod>2018-05-02T06:28:43-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.warrenwilkinson.ca/categories/opencv-projection-other/</loc>
     <lastmod>2018-04-01T06:28:43-08:00</lastmod>
     <priority>0</priority>
@@ -62,13 +73,13 @@
   
   <url>
     <loc>http://www.warrenwilkinson.ca/technote/</loc>
-    <lastmod>2018-04-01T06:28:43-08:00</lastmod>
+    <lastmod>2018-05-02T06:28:43-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.warrenwilkinson.ca/</loc>
-    <lastmod>2018-04-01T06:28:43-08:00</lastmod>
+    <lastmod>2018-05-02T06:28:43-08:00</lastmod>
     <priority>0</priority>
   </url>
   

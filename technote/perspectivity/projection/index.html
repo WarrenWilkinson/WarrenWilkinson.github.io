@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<meta name="description" content="Your description">
 	<meta name="author" content="Your name">
-	<meta name="generator" content="Hugo 0.38" />
+	<meta name="generator" content="Hugo 0.40.2" />
 	<title>Perspectivity; Extracting and Changing the image in a poster &middot; Warren Wilkinson</title>
 	<!-- Stylesheets -->
 	
@@ -109,6 +109,12 @@ img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>
 inside_frame <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpPerspective(img, M, (w,h))
 cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#39;inside_frame.jpg&#39;</span>,inside_frame)</code></pre></div>
 
+<pre><code>M is...
+[[  1.68508672e+00   3.62384241e-02  -3.22974955e+02]
+ [  4.32301983e-02   1.50224939e+00  -5.48266990e+01]
+ [  5.08113892e-04   1.01219194e-04   1.00000000e+00]]
+</code></pre>
+
 <p><img src="/technote/perspectivity/inside_frame.jpg" alt="img" /></p>
 
 <p>This projection matrix can also be used to replace the image in the
@@ -184,7 +190,7 @@ above to create an 8 row, 9 column matrix:</p>
 = 0
 \end{equation}</p>
 
-<p>This pseudo-inverse of this matrix can be found using singular value
+<p>The pseudo-inverse of this matrix can be found using singular value
 decomposition.</p>
 
 <p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy
@@ -209,6 +215,11 @@ M <span style="color:#f92672">=</span> None
        <span style="color:#66d9ef">break</span>
 
 <span style="color:#66d9ef">print</span> M</code></pre></div></p>
+
+<pre><code>[[  1.68511866e+00   3.62391110e-02  -3.22981077e+02]
+ [  4.32310177e-02   1.50227787e+00  -5.48277383e+01]
+ [  5.08180922e-04   1.01221693e-04   1.00000000e+00]]
+</code></pre>
 
 <h1 id="references">References</h1>
 

@@ -6,10 +6,20 @@
     <description>Recent content on Warren Wilkinson</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Apr 2018 06:28:43 -0800</lastBuildDate>
+    <lastBuildDate>Wed, 02 May 2018 06:28:43 -0800</lastBuildDate>
     
 	<atom:link href="http://www.warrenwilkinson.ca/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Motion History Classifier; Classifying Video</title>
+      <link>http://www.warrenwilkinson.ca/technote/motionhistory/mhi/</link>
+      <pubDate>Wed, 02 May 2018 06:28:43 -0800</pubDate>
+      
+      <guid>http://www.warrenwilkinson.ca/technote/motionhistory/mhi/</guid>
+      <description>Motion history images are motion-blurred silhouettes. Here is an example. The original is on the left, the background is removed, A cleaned-up mask produced. The resulting motion history images are the frames off the animation on the right.
+Hu Moments and Classification The Hu moments of the motion history image can be computed using OpenCV (or other libraries, or by hand). These seven moments can be used as a feature vector in classification tasks.</description>
+    </item>
     
     <item>
       <title>Perspectivity; Extracting and Changing the image in a poster</title>

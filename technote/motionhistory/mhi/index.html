@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="Your description">
+	<meta name="author" content="Your name">
+	<meta name="generator" content="Hugo 0.40.2" />
+	<title>Motion History Classifier; Classifying Video &middot; Warren Wilkinson</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="http://www.warrenwilkinson.ca/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="http://www.warrenwilkinson.ca/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="http://www.warrenwilkinson.ca/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="http://www.warrenwilkinson.ca/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="http://www.warrenwilkinson.ca/" class="logo"><strong>Forty</strong> <span>By HTML5 Up</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="http://www.warrenwilkinson.ca/">Home</a></li>
+            
+                <li><a href="http://www.warrenwilkinson.ca/technote">technote</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Motion History Classifier; Classifying Video</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/mhi.gif" alt="" /></span>
+                            
+                            
+
+<p>Motion history images are motion-blurred silhouettes. Here is an
+example.  The original is on the left, the background is removed, A
+cleaned-up mask produced.  The resulting motion history images are the
+frames off the animation on the right.</p>
+
+<p><img src="/technote/motionhistory/quad_append.gif" alt="img" /></p>
+
+<h1 id="hu-moments-and-classification">Hu Moments and Classification</h1>
+
+<p>The Hu moments of the motion history image can be computed using
+OpenCV (or other libraries, or by hand). These seven moments can be
+used as a feature vector in classification tasks.</p>
+
+<p>Hu Moments are invarient to rotation, scaling, and translation. But
+not affine or perspective translations (or changes in viewpoint). See Appendix for
+the images.</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">**Image**</th>
+<th scope="col" class="org-right">**Hu1**</th>
+<th scope="col" class="org-right">**Hu2**</th>
+<th scope="col" class="org-right">**Hu3**</th>
+<th scope="col" class="org-right">**Hu4**</th>
+<th scope="col" class="org-right">**Hu5**</th>
+<th scope="col" class="org-right">**Hu6**</th>
+<th scope="col" class="org-right">**Hu7**</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="org-left">None</td>
+<td class="org-right">1.157e-03</td>
+<td class="org-right">6.721e-07</td>
+<td class="org-right">1.824e-10</td>
+<td class="org-right">5.402e-11</td>
+<td class="org-right">5.194e-21</td>
+<td class="org-right">4.381e-14</td>
+<td class="org-right">1.336e-21</td>
+</tr>
+
+
+<tr>
+<td class="org-left">Horizontal Flip</td>
+<td class="org-right">1.157e-03</td>
+<td class="org-right">6.721e-07</td>
+<td class="org-right">1.824e-10</td>
+<td class="org-right">5.402e-11</td>
+<td class="org-right">5.194e-21</td>
+<td class="org-right">4.381e-14</td>
+<td class="org-right">-1.336e-21</td>
+</tr>
+
+
+<tr>
+<td class="org-left">Vertical Flip</td>
+<td class="org-right">1.157e-03</td>
+<td class="org-right">6.721e-07</td>
+<td class="org-right">1.824e-10</td>
+<td class="org-right">5.402e-11</td>
+<td class="org-right">5.194e-21</td>
+<td class="org-right">4.381e-14</td>
+<td class="org-right">-1.336e-21</td>
+</tr>
+
+
+<tr>
+<td class="org-left">Translation</td>
+<td class="org-right">1.157e-03</td>
+<td class="org-right">6.721e-07</td>
+<td class="org-right">1.824e-10</td>
+<td class="org-right">5.402e-11</td>
+<td class="org-right">5.194e-21</td>
+<td class="org-right">4.381e-14</td>
+<td class="org-right">1.336e-21</td>
+</tr>
+
+
+<tr>
+<td class="org-left">Rotation</td>
+<td class="org-right">1.157e-03</td>
+<td class="org-right">6.722e-07</td>
+<td class="org-right">1.825e-10</td>
+<td class="org-right">5.410e-11</td>
+<td class="org-right">5.207e-21</td>
+<td class="org-right">4.387e-14</td>
+<td class="org-right">1.341e-21</td>
+</tr>
+
+
+<tr>
+<td class="org-left">Scaled</td>
+<td class="org-right">1.157e-03</td>
+<td class="org-right">6.693e-07</td>
+<td class="org-right">1.801e-10</td>
+<td class="org-right">5.405e-11</td>
+<td class="org-right">5.148e-21</td>
+<td class="org-right">4.367e-14</td>
+<td class="org-right">1.398e-21</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+<td class="org-left">Affine</td>
+<td class="org-right">1.446e-03</td>
+<td class="org-right">1.427e-06</td>
+<td class="org-right">2.398e-10</td>
+<td class="org-right">1.089e-10</td>
+<td class="org-right">1.761e-20</td>
+<td class="org-right">1.239e-13</td>
+<td class="org-right">2.499e-23</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="appendix">Appendix</h1>
+
+<h2 id="transformed-images">Transformed Images</h2>
+
+<h3 id="basic-image">Basic Image</h3>
+
+<p><img src="/technote/motionhistory/example_mhi.png" alt="img" /></p>
+
+<h3 id="flipped-image">Flipped Image</h3>
+
+<p><img src="/technote/motionhistory/example_flip_horz.png" alt="img" /></p>
+
+<h3 id="horizontal-image">Horizontal Image</h3>
+
+<p><img src="/technote/motionhistory/example_flip_vert.png" alt="img" /></p>
+
+<h3 id="translated">Translated</h3>
+
+<p><img src="/technote/motionhistory/example_translated.png" alt="img" /></p>
+
+<h3 id="rotated">Rotated</h3>
+
+<p><img src="/technote/motionhistory/example_rotated.png" alt="img" /></p>
+
+<h3 id="scaled">Scaled</h3>
+
+<p><img src="/technote/motionhistory/example_scaled.png" alt="img" /></p>
+
+<h3 id="affine">Affine</h3>
+
+<p><img src="/technote/motionhistory/example_affine.png" alt="img" /></p>
+
+<h2 id="python-code-for-generating-hu-moments-examples">Python Code For Generating Hu Moments Examples</h2>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+frame <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#34;example_mhi.png&#34;</span>,<span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;No Transform&#34;</span>
+<span style="color:#66d9ef">print</span> cv2<span style="color:#f92672">.</span>HuMoments(cv2<span style="color:#f92672">.</span>moments(frame))<span style="color:#f92672">.</span>flatten()
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Horz Flip&#34;</span>
+flip_horz <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>flip( frame, <span style="color:#ae81ff">1</span> )
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;example_flip_horz.png&#34;</span>, flip_horz)
+<span style="color:#66d9ef">print</span> cv2<span style="color:#f92672">.</span>HuMoments(cv2<span style="color:#f92672">.</span>moments(flip_horz))<span style="color:#f92672">.</span>flatten()
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Vert Flip&#34;</span>
+flip_vert <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>flip( frame, <span style="color:#ae81ff">0</span> )
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;example_flip_vert.png&#34;</span>, flip_vert)
+<span style="color:#66d9ef">print</span> cv2<span style="color:#f92672">.</span>HuMoments(cv2<span style="color:#f92672">.</span>moments(flip_vert))<span style="color:#f92672">.</span>flatten()
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Translate&#34;</span>
+M <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>],[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>]])
+rows,cols <span style="color:#f92672">=</span> frame<span style="color:#f92672">.</span>shape
+translated <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpAffine(frame,M,(cols, rows))
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;example_translated.png&#34;</span>, translated)
+<span style="color:#66d9ef">print</span> cv2<span style="color:#f92672">.</span>HuMoments(cv2<span style="color:#f92672">.</span>moments(translated))<span style="color:#f92672">.</span>flatten()
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Rotate&#34;</span>
+rows,cols <span style="color:#f92672">=</span> frame<span style="color:#f92672">.</span>shape
+center <span style="color:#f92672">=</span> (cols<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>,rows<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>)
+M <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>getRotationMatrix2D(center,<span style="color:#ae81ff">45</span>,<span style="color:#ae81ff">1</span>)
+rotated <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpAffine(frame,M,(cols,rows))
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;example_rotated.png&#34;</span>, rotated)
+<span style="color:#66d9ef">print</span> cv2<span style="color:#f92672">.</span>HuMoments(cv2<span style="color:#f92672">.</span>moments(rotated))<span style="color:#f92672">.</span>flatten()
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Scale&#34;</span>
+M <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#f92672">.</span><span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>],[<span style="color:#ae81ff">0</span>,<span style="color:#f92672">.</span><span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">10</span>]])
+rows,cols <span style="color:#f92672">=</span> frame<span style="color:#f92672">.</span>shape
+scaled <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpAffine(frame,M,(cols, rows))
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;example_scaled.png&#34;</span>, scaled)
+<span style="color:#66d9ef">print</span> cv2<span style="color:#f92672">.</span>HuMoments(cv2<span style="color:#f92672">.</span>moments(scaled))<span style="color:#f92672">.</span>flatten()
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Affine&#34;</span>
+M <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">1</span>,<span style="color:#f92672">.</span><span style="color:#ae81ff">45</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>],[<span style="color:#f92672">.</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1.0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">15</span>]])
+rows,cols <span style="color:#f92672">=</span> frame<span style="color:#f92672">.</span>shape
+affine <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpAffine(frame,M,(cols, rows))
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;example_affine.png&#34;</span>, affine)
+<span style="color:#66d9ef">print</span> cv2<span style="color:#f92672">.</span>HuMoments(cv2<span style="color:#f92672">.</span>moments(affine))<span style="color:#f92672">.</span>flatten()</code></pre></div>
+
+<h1 id="references">References</h1>
+
+<ul>
+<li>A. F. Bobick and J. W. Davis, &ldquo;The recognition of human movement using temporal templates,&rdquo; in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 23, no. 3, pp. 257-267, Mar 2001.</li>
+</ul>
+
+<p>doi: 10.<sup>1109</sup>&frasl;<sub>34</sub>.910878</p>
+
+                        </div>
+                    </section>
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://github.com/WarrenWilkinson" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/warrenwilkinson2/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+                    <li><a href="https://stackoverflow.com/users/story/2250110" class="icon alt fa-stack-overflow" target="_blank"><span class="label">Stack Overflow</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Warren Wilkinson</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- MathJax -->
+    <script type="text/javascript" async
+	    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- jQuery -->
+    <script src="http://www.warrenwilkinson.ca/js/jquery.min.js"></script>
+    <script src="http://www.warrenwilkinson.ca/js/jquery.scrolly.min.js"></script>
+    <script src="http://www.warrenwilkinson.ca/js/jquery.scrollex.min.js"></script>
+    <script src="http://www.warrenwilkinson.ca/js/skel.min.js"></script>
+    <script src="http://www.warrenwilkinson.ca/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="http://www.warrenwilkinson.ca/js/main.js"></script>
+
+    
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-114851695-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+    
+
+
+    </body>
+</html>
